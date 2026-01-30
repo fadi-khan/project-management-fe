@@ -19,23 +19,26 @@ export const MobileSideBar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpe
       </div>
       <ul className="px-4 flex flex-col w-full  gap-5 lg:text-blue-900 text-white font-medium mt-20 text-start">
 
-      
-       <Link
+
+        <Link
+          onClick={() => { setIsOpen(false) }}
           className={`p-2 cursor-pointer hover:bg-blue-900 hover:text-white rounded-md flex items-center gap-2 ${pathname?.startsWith('/dashboard') ? 'bg-blue-900 text-white' : ''}`}
           href="/dashboard">
           <MdOutlineHome size={26} className="cursor-pointer" />
           <div className="text-lg  ">Dashboard</div>
         </Link>
 
-          <Link
+        <Link
+          onClick={() => { setIsOpen(false) }}
           className={`p-2 cursor-pointer hover:bg-blue-900 hover:text-white rounded-md flex items-center gap-2 ${pathname?.startsWith('/projects') ? 'bg-blue-900 text-white' : ''}`}
           href="/projects">
           <MdOutlineFolder size={24} className="cursor-pointer" />
           <div className="text-lg  ">Projects</div>
         </Link>
-       
-       
+
+
         <Link
+          onClick={() => { setIsOpen(false) }}
           className={`p-2 cursor-pointer hover:bg-blue-900 hover:text-white rounded-md flex items-center gap-2 ${pathname?.startsWith('/tasks') ? 'bg-blue-900 text-white' : ''}`}
           href="/tasks">
           <MdOutlineCheckBox size={24} className="cursor-pointer" />
