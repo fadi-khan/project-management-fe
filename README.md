@@ -1,3 +1,30 @@
+Project Management System
+
+A brief, high-impact description of what this project does and the core problem it solves.
+
+🚀 Key Features
+
+*   **Robust Authentication System:** Implemented secure user authentication  featuring a dual-token strategy with **Access** and **Refresh Tokens** for enhanced security and session persistence.
+*   **Granular Role-Based Access Control (RBAC):** Integrated strict authorization layers to manage resource access based on user roles, ensuring sensitive data and administrative actions are restricted.
+*   **Comprehensive Data Validation:** Leveraged advanced **Form Validation** techniques to ensure data integrity, provide real-time feedback, and prevent malicious injections.
+*   **Efficient Data Management:** Optimized performance with server-side **Pagination** and dynamic **Filtering** to handle large datasets seamlessly.
+*   **Secure Route Guards & State Persistence:** Implemented **Protected Routes** to prevent unauthorized navigation, utilizing **HTTP-only Cookies** for secure, cross-site credential management.
+
+ ⚙️ Environment Variables
+
+To run this project, add the following to your `.env` file:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
