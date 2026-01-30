@@ -109,8 +109,7 @@ const currentPage = data?.page
                   <td className="capitalize px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t.title}</td>
                   <td className="capitalize px-6 py-4 font-medium hover:underline hover:underline-offset-4 text-sm text-blue-800"><Link href={`/projects/${t.project?.id}`}>{t.project?.name ?? '-'}</Link></td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <Select
-                      disabled={!isAdmin}
+                    <Select                    
                       className="text-blue-900 border rounded px-2 py-1 min-w-[120px]"
                       value={t.status}
                       onChange={(e) => updateTask.mutate({ id: t.id, data: { status: e.target.value } })}
