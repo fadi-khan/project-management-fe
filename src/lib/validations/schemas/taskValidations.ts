@@ -25,7 +25,7 @@ export const taskValidationSchema = yup.object().shape({
     .optional(),
   dueDate: yup
     .date()
-    .min(new Date(Date.now() + 24 * 60 * 60 * 1000), 'Due date must be in the future')
+    .min(new Date(), 'Due date must be in the future')
     .required('Due date is required')
   
 

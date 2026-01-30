@@ -88,7 +88,7 @@ export default function ProjectsPage() {
                   <td 
                   onClick={() => isAdmin ? router.push(`/projects/${p.id}`):"#"}
                   className="px-6 py-4 whitespace-nowrap text-sm font-medium cursor-pointer hover:underline hover:underline-offset-4 text-blue-900">{p.name}</td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{p.description}</td>
+                  <td className="px-6 py-4 flex text-sm max-w-[250px] overflow-y-auto  max-h-[80px] text-gray-500">{p.description}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${p.status === 'COMPLETED' || p.status === 'Completed'

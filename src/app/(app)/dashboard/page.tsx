@@ -147,7 +147,7 @@ export default function Dashboard() {
                                     className="px-6 hover:underline hover:underline-offset-4 text-blue-900  py-4 whitespace-nowrap text-sm font-medium  cursor-pointer">
                                         {project.name}
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-500">
+                                    <td className="flex text-sm max-w-[250px] overflow-y-auto  max-h-[80px] px-6 py-4  text-gray-500">
                                         {project.description}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
