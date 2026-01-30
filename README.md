@@ -1,4 +1,4 @@
-Project Management Systems
+Project Management System
 
 A brief, high-impact description of what this project does and the core problem it solves.
 
