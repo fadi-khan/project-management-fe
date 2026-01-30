@@ -11,6 +11,7 @@ import { ProjectWizard } from '@/components/wizards/ProjectWizard'
 import { TaskWizard } from '@/components/wizards/TaskWizard'
 import { useUsers } from '@/lib/hooks/useUserQueries'
 import { useRouter } from 'next/navigation'
+import { UserType } from '@/data/enums/UserType'
 
 
 
@@ -25,7 +26,9 @@ export default function ProjectsPage() {
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
 
   const router = useRouter()
-  
+  const user = localStorage.getItem("user")
+    const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
+    
   if (isLoading) {
     return (
       <div className='fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2'>
@@ -46,8 +49,9 @@ export default function ProjectsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Projects</h1>
         <button
+          disabled={!isAdmin}
           onClick={() => setCreateProject(true)}
-          className="px-4 py-2 rounded bg-blue-900 text-white "
+          className="px-4 py-2 disabled:bg-blue-900/90 cursor-pointer rounded bg-blue-900 text-white "
         >
           Create Project
         </button>
@@ -82,7 +86,7 @@ export default function ProjectsPage() {
                 
                 key={p.id} className="hover:bg-gray-50 cursor-pointer">
                   <td 
-                  onClick={() => router.push(`/projects/${p.id}`)}
+                  onClick={() => isAdmin ? router.push(`/projects/${p.id}`):"#"}
                   className="px-6 py-4 whitespace-nowrap text-sm font-medium cursor-pointer hover:underline hover:underline-offset-4 text-blue-900">{p.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-500">{p.description}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -100,9 +104,13 @@ export default function ProjectsPage() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {p?.createdBy?.name || 'Unknown'}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <Menu>
-                      <MenuButton>
+                  <td  
+            
+                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <Menu >
+                      <MenuButton
+                      disabled={!isAdmin}
+                      >
                         <MdMoreVert
                           size={20}
                           className="focus:outline-none active:outline-none hover:outline-none focus:ring-0 active:border-none cursor-pointer text-blue-900"

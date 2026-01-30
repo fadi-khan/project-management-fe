@@ -12,6 +12,8 @@ import { ProjectWizard } from '@/components/wizards/ProjectWizard';
 import { TaskWizard } from '@/components/wizards/TaskWizard';
 import { useUsers } from '@/lib/hooks/useUserQueries';
 import { Spinner } from 'flowbite-react';
+import { UserType } from '@/data/enums/UserType';
+import { useRouter } from 'next/navigation';
 
 export const Metadata = {
     title: "Task Management Dashboard",
@@ -56,10 +58,15 @@ export default function Dashboard() {
     const [createTask, setCreateTask] = useState(false);
     const [editingProject, setEditingProject] = useState<any | null>(null);
 
+    const router = useRouter()
+
+    const user = localStorage.getItem("user")
+    const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
+
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <Spinner size='lg'/>
+                <Spinner size='lg' />
             </div>
         );
     }
@@ -135,7 +142,9 @@ export default function Dashboard() {
                         <tbody className="bg-white divide-y divide-gray-200">
                             {projects.map((project: Project) => (
                                 <tr key={project.id} className="hover:bg-gray-50">
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    <td
+                                    onClick={()=> isAdmin ? router.push(`/projects/${project.id}`):"#"}
+                                    className="px-6 hover:underline hover:underline-offset-4 text-blue-900  py-4 whitespace-nowrap text-sm font-medium  cursor-pointer">
                                         {project.name}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">
@@ -156,7 +165,9 @@ export default function Dashboard() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Menu>
-                                            <MenuButton>
+                                            <MenuButton
+                                            disabled={!isAdmin}
+                                            >
                                                 <MdMoreVert
                                                     size={20}
                                                     className="focus:outline-none active:outline-none hover:outline-none focus:ring-0 active:border-none cursor-pointer text-blue-900"
@@ -236,7 +247,7 @@ export default function Dashboard() {
                     toggleProject={() => setEditingProject(null)}
                 />
             )}
-            
+
             {createTask && (
                 <TaskWizard
                     users={users}

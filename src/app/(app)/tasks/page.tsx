@@ -8,6 +8,7 @@ import { Select } from '@headlessui/react'
 import { useUsers } from '@/lib/hooks/useUserQueries'
 import Link from 'next/link'
 import { Spinner } from 'flowbite-react'
+import { UserType } from '@/data/enums/UserType'
 
 export default function TasksPage() {
   const [status, setStatus] = useState<string>('')
@@ -32,6 +33,9 @@ const { data: users } = useUsers()
 const tasks = data?.data ?? []
 const totalPages = data?.total
 const currentPage = data?.page
+
+  const user = localStorage.getItem("user")
+  const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
 
   if (isLoading) {
     return(
@@ -64,12 +68,14 @@ const currentPage = data?.page
             ))}
           </Select>
           
-          <Select className="border border-blue-900 rounded px-3 py-2 min-w-[140px]" value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}>
+          {
+            isAdmin &&<Select className="border border-blue-900 rounded px-3 py-2 min-w-[140px]" value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}>
             <option value="">Assigned To</option>
             {users?.map((user:any) => (
               <option key={user.id} value={user.id}>{user.name}</option>
             ))}
           </Select>
+          }
         </div>
 
         </div>
@@ -104,6 +110,7 @@ const currentPage = data?.page
                   <td className="capitalize px-6 py-4 font-medium hover:underline hover:underline-offset-4 text-sm text-blue-800"><Link href={`/projects/${t.project?.id}`}>{t.project?.name ?? '-'}</Link></td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Select
+                      disabled={!isAdmin}
                       className="text-blue-900 border rounded px-2 py-1 min-w-[120px]"
                       value={t.status}
                       onChange={(e) => updateTask.mutate({ id: t.id, data: { status: e.target.value } })}
