@@ -47,7 +47,7 @@ export default function ProjectsPage() {
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Projects</h1>
+        <h1 className="text-3xl font-bold text-blue-900">Projects</h1>
         <button
           disabled={!isAdmin}
           onClick={() => setCreateProject(true)}
