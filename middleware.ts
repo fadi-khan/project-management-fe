@@ -10,21 +10,21 @@ export const config = {
 }
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  // const { pathname } = request.nextUrl
 
-  const token = request.cookies.get('access_token')?.value
+  // const token = request.cookies.get('access_token')?.value
 
-  const isPublicRoute = PUBLIC_ROUTES.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`),
-  )
+  // const isPublicRoute = PUBLIC_ROUTES.some(
+  //   (route) => pathname === route || pathname.startsWith(`${route}/`),
+  // )
 
-  if (!token && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+  // if (!token && !isPublicRoute) {
+  //   return NextResponse.redirect(new URL('/login', request.url))
+  // }
 
-  if (token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
-  }
+  // if (token && isPublicRoute) {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url))
+  // }
 
-  return NextResponse.next()
+  // return NextResponse.next()
 }
