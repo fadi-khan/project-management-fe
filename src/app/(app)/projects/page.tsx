@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useProjects } from '@/lib/hooks/useProjectQueries'
 import { useDeleteProject } from '@/lib/hooks/useProjectQueries'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { MdMoreVert } from 'react-icons/md'
 import { Spinner } from 'flowbite-react'
@@ -26,10 +26,15 @@ export default function ProjectsPage() {
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
 
   const router = useRouter()
-  const user = localStorage.getItem("user")
-    const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
+     const [isMounted, setIsMounted] = useState(false);
+        const [isAdmin, setIsAdmin] = useState(false);
     
-  if (isLoading) {
+        useEffect(() => {
+            setIsMounted(true);
+            const user = localStorage.getItem("user")
+            setIsAdmin(user ? JSON.parse(user)?.role === UserType.ADMIN : false)
+        }, []);
+  if (isLoading || !isMounted) {
     return (
       <div className='fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2'>
         <Spinner className='text-blue-900' size='xl' />

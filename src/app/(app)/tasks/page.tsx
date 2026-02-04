@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTasks, useUpdateTask } from '@/lib/hooks/useTaskQueries'
 import { TaskStatus } from '@/data/enums/TaskStatus'
 import { TaskPriority } from '@/data/enums/TaskPriority'
@@ -34,10 +34,15 @@ const tasks = data?.data ?? []
 const totalPages = data?.total
 const currentPage = data?.page
 
-  const user = localStorage.getItem("user")
-  const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
+ const [isMounted, setIsMounted] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-  if (isLoading) {
+    useEffect(() => {
+        setIsMounted(true);
+        const user = localStorage.getItem("user")
+        setIsAdmin(user ? JSON.parse(user)?.role === UserType.ADMIN : false)
+    }, []);
+  if (isLoading || !isMounted) {
     return(
       <div className='fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2'>
         <Spinner   size='xl'/>

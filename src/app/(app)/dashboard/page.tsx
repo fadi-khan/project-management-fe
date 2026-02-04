@@ -7,7 +7,7 @@ import { useDeleteProject } from '@/lib/hooks/useProjectQueries'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { MdMoreVert } from 'react-icons/md';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ProjectWizard } from '@/components/wizards/ProjectWizard';
 import { TaskWizard } from '@/components/wizards/TaskWizard';
 import { useUsers } from '@/lib/hooks/useUserQueries';
@@ -58,12 +58,19 @@ export default function Dashboard() {
     const [createTask, setCreateTask] = useState(false);
     const [editingProject, setEditingProject] = useState<any | null>(null);
 
+
     const router = useRouter()
+    const [isMounted, setIsMounted] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    const user = localStorage.getItem("user")
-    const isAdmin = user ? JSON.parse(user)?.role === UserType.ADMIN : false
+    useEffect(() => {
+        setIsMounted(true);
+        const user = localStorage.getItem("user")
+        setIsAdmin(user ? JSON.parse(user)?.role === UserType.ADMIN : false)
+    }, []);
 
-    if (isLoading) {
+
+    if (isLoading || !isMounted) {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <Spinner size='lg' />
@@ -143,8 +150,8 @@ export default function Dashboard() {
                             {projects.map((project: Project) => (
                                 <tr key={project.id} className="hover:bg-gray-50">
                                     <td
-                                    onClick={()=> isAdmin ? router.push(`/projects/${project.id}`):"#"}
-                                    className="px-6 hover:underline hover:underline-offset-4 text-blue-900  py-4 whitespace-nowrap text-sm font-medium  cursor-pointer">
+                                        onClick={() => isAdmin ? router.push(`/projects/${project.id}`) : "#"}
+                                        className="px-6 hover:underline hover:underline-offset-4 text-blue-900  py-4 whitespace-nowrap text-sm font-medium  cursor-pointer">
                                         {project.name}
                                     </td>
                                     <td className="flex text-sm max-w-[250px] overflow-y-auto  max-h-[80px] px-6 py-4  text-gray-500">
@@ -166,7 +173,7 @@ export default function Dashboard() {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <Menu>
                                             <MenuButton
-                                            disabled={!isAdmin}
+                                                disabled={!isAdmin}
                                             >
                                                 <MdMoreVert
                                                     size={20}
