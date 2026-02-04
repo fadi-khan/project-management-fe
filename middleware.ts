@@ -17,11 +17,7 @@ export async function middleware(request: NextRequest) {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   )
 
-  if (!cookie && !isPublicRoute) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
 
-  if (cookie) {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/profile`, {
         method: 'GET',
@@ -42,7 +38,7 @@ export async function middleware(request: NextRequest) {
     } catch (err) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
-  }
+  
 
   return NextResponse.next()
 }

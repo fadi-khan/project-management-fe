@@ -24,8 +24,6 @@ export const authService = {
             const response = await httpService.post("auth/sign-in", { password, email })
             store.dispatch(setCredentials(response?.data?.user))
             toast.success(response?.data?.message )
-            window.location.href = '/dashboard'
-
             return response;
         } catch (error: any) {
 
