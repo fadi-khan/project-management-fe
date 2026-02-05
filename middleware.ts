@@ -9,24 +9,24 @@ export const config = {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const isPublicRoute = PUBLIC_ROUTES.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`)
-  )
+  // const { pathname } = request.nextUrl
+  // const isPublicRoute = PUBLIC_ROUTES.some(
+  //   (route) => pathname === route || pathname.startsWith(`${route}/`)
+  // )
 
-  if (isPublicRoute) {
-    return NextResponse.next()
-  }
+  // if (isPublicRoute) {
+  //   return NextResponse.next()
+  // }
 
 
 
-  try {
-    const res = await httpService.get("auth/profile")
+  // try {
+  //   const res = await httpService.get("auth/profile")
 
-    if (!res) throw new Error('Invalid token')
+  //   if (!res) throw new Error('Invalid token')
 
-    return NextResponse.next()
-  } catch {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
+  //   return NextResponse.next()
+  // } catch {
+  //   return NextResponse.redirect(new URL('/login', request.url))
+  // }
 }
